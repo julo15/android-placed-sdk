@@ -12,7 +12,7 @@ allprojects {
     repositories {
         ...
 
-        maven { url "https://raw.githubusercontent.com/placed/android-placed-sdk/master" }
+        maven { url "https://raw.githubusercontent.com/placed/android-placed-sdk/master/repository" }
     }
 }
 ```
