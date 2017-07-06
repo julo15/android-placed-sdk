@@ -1,4 +1,4 @@
-# Placed Affiliate SDK (Android) v1.30
+# Placed Affiliate SDK (Android) v1.31
   
 ## Integrating your application with the Placed Monetization SDK
   
@@ -22,7 +22,7 @@
     dependencies {
         ...
 
-        compile 'com.placed.client:android-persistent-sdk:1.30'
+        compile 'com.placed.client:android-persistent-sdk:1.+'
     }
     ```
 
@@ -58,69 +58,76 @@
 
     You'll want to add this permission prompt to the Activity that calls `PlacedAgent.registerApp()` or `PlacedAgent.registerAppWithDialog`. For example:
 
+    ```java
+    //-------
+    // Add a constant for the request code
+    private static final int REQUEST_CODE_PERMISSION = <unique int for requesting location permission for the use of the sdk>;
 
-        //-------
-        // Add a constant for the request code
-        private static final int REQUEST_CODE_PERMISSION = <unique int for requesting location permission for the use of the sdk>;
+    //--------
+    // This if() block needs to happen before PlacedAgent.registerApp() or PlacedAgent.registerAppWithDialog() is called
+    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_PERMISSION);
+        return;
+    }
 
-        //--------
-        // This if() block needs to happen before PlacedAgent.registerApp() or PlacedAgent.registerAppWithDialog() is called
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_PERMISSION);
-            return;
-        }
-
-        //---------
-        // This code needs to go into the onRequestPermissionsResult() method in the same Activity that calls ActivityCompat.requestPermissions
-        if(requestCode == REQUEST_CODE_PERMISSION) {
-            for(int idx = 0; idx < permissions.length; ++idx) {
-                if(permissions[idx].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[idx] == PackageManager.PERMISSION_GRANTED) {
-                    // call a method that register the app or call one of the PlacedAgent registerApp methods
-                    break;
-                }
+    //---------
+    // This code needs to go into the onRequestPermissionsResult() method in the same Activity that calls ActivityCompat.requestPermissions
+    if(requestCode == REQUEST_CODE_PERMISSION) {
+        for(int idx = 0; idx < permissions.length; ++idx) {
+            if(permissions[idx].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[idx] == PackageManager.PERMISSION_GRANTED) {
+                // call a method that register the app or call one of the PlacedAgent registerApp methods
+                break;
             }
         }
+    }
+    ```
 
 ### Integration
 
 * Place the following code in your application's main activity `onCreate` method:
 * Make sure to replace **YOUR\_APP\_KEY** with your application key
 
-        /**
-        * Call this method for default opt-in behavior, this will show a dialog
-        * to your users asking them to opt-in to location tracking (recommended)
-        * This dialog will only be shown once over the lifetime of the application
-        */
-        PlacedAgent.registerAppWithDialog(YourMainActivity.this, YOUR_APP_KEY);  
-        
-        /**
-        * If you want a custom theme for the dialog, pass in the style/theme as a parameter
-        */
-        PlacedAgent.registerAppWithDialog(YourMainActivity.this, YOUR_APP_KEY, R.style.your_dialog_theme);
+    ```java
+    /**
+    * Call this method for default opt-in behavior, this will show a dialog
+    * to your users asking them to opt-in to location tracking (recommended)
+    * This dialog will only be shown once over the lifetime of the application
+    */
+    PlacedAgent.registerAppWithDialog(YourMainActivity.this, YOUR_APP_KEY);  
+    
+    /**
+    * If you want a custom theme for the dialog, pass in the style/theme as a parameter
+    */
+    PlacedAgent.registerAppWithDialog(YourMainActivity.this, YOUR_APP_KEY, R.style.your_dialog_theme);
+    ```
 
 * To send additional information, such as demographics, to Placed, please include the following code in your application's main activity after calling `PlacedAgent.registerAppWithDialog`:
 
 * Log a unique identifier
 
-        /**  
-        * This method logs a unique id  
-        *  
-        * @param context Your application's context  
-        * @param id the unique id  
-        */
-        PlacedAgent.logUniqueId(Context context, String id)
+    ```java
+    /**  
+    * This method logs a unique id  
+    *  
+    * @param context Your application's context  
+    * @param id the unique id  
+    */
+    PlacedAgent.logUniqueId(Context context, String id)
+    ```
 
 * Sending demographic data
 
-        /**
-        * This method is used to log demographics
-        *
-        * @param jsonString A string representing a JSON blob of the raw data returned  
-        * by the source API
-        * @param source A string with the name of the demographics source (e.g. Facebook)  
-        * @param version If the source API is versioned please include the version number.  
-        */
-        PlacedAgent.logDemographics(Context context, String jsonString, String source, String version)
+    ```java
+    /**
+    * This method is used to log demographics
+    *
+    * @param jsonString A string representing a JSON blob of the raw data returned  
+    * by the source API
+    * @param source A string with the name of the demographics source (e.g. Facebook)  
+    * @param version If the source API is versioned please include the version number.  
+    */
+    PlacedAgent.logDemographics(Context context, String jsonString, String source, String version)
+    ```
 
 ### Register
 Please contact your Placed representative to find out how to register your account. If you do not have a representative yet, please email [affiliate@placed.com](mailto:affiliate@placed.com)
@@ -134,28 +141,40 @@ To limit device id collection to just the advertising id, add the following line
 ### Support
 For further guidance contact [affiliate@placed.com](mailto:affliate@placed.com)
 
-## SDK Glossary
+## SDK Reference
 
-### Placed Agent Methods  
+### PlacedAgent Methods  
   
-`static void registerAppWithDialog(final Activity activity, final String appKey)`  
-`static void registerAppWithDialog(final Activity activity, final String appKey, Integer theme)`  
-Show the user an opt-in dialog for Placed location measurement. If the user accepts the terms in the dialog, they will be opted-in to Placed location measurement. Pass in the optional theme parameter to use a custom dialog theme.
+```java
+/**
+ * Show the user an opt-in dialog for Placed location measurement. 
+ * If the user accepts the terms in the dialog, they will be opted-in to Placed location measurement.
+ * Pass in the optional theme parameter to use a custom dialog theme.
+ */
+static void registerAppWithDialog(final Activity activity, final String appKey)
+static void registerAppWithDialog(final Activity activity, final String appKey, Integer theme)
 
-`static boolean shouldDisplayDialog(final Activity activity, final String appKey)`  
-Returns true if the current device can have an opt-in dialog displayed, meaning that they are either in the US or US only has been disabled and they have not seen a dialog before. To be used when implementing a custom opt-in dialog.
-
-`static void registerApp(Context context, String appKey)`  
-Register this install of your app with Placed. This method automatically opts a user in to location measurement. Usually you would use this method if you are creating your own opt-in dialog, or want finer control of when a user is opted-in.  
+/**
+ * Log an `id` that is unique to this install of your application.
+ * This method is used with custom integrations with Placed.
+ */
+static void logUniqueId(Context context, String id)
   
-`static void logUniqueId(Context context, String id)`  
-Log an `id` that is unique to this install of your application. This method is used with custom integrations with Placed.
+/**
+ * If you app falls under Google's policy rules that prohibit collection of various device identifiers, 
+ * call this method with `restrict` set to true so that Placed will only collect identifiers that meet that policy.
+ */
+static void setRestrictDeviceIds(Context context, boolean restrict)
   
-`static void setRestrictDeviceIds(Context context, boolean restrict)`
-If you app falls under Google's policy rules that prohibit collection of various device identifiers, call this method with `restrict` set to true so that Placed will only collect identifiers that meet that policy.
+/**
+ * This method is used for custom integrations with Placed.
+ * If you have questions please inquire with your contact at Placed.  
+ */
+static void logFacebookLikes(Context context, String jsonString)
   
-`static void logFacebookLikes(Context context, String jsonString)`  
-This method is used for custom integrations with Placed. If you have questions please inquire with your contact at Placed.  
-  
-`static void logDemographics(Context context, String jsonString, String source, String version)`  
-This method is used for custom integrations with Placed. If you have questions please inquire with your contact at Placed.  
+/**
+ * This method is used for custom integrations with Placed.
+ * If you have questions please inquire with your contact at Placed.  
+ */
+static void logDemographics(Context context, String jsonString, String source, String version)
+```
