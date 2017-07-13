@@ -15,7 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://raw.githubusercontent.com/placed/android-placed-sdk/master/repository" }
+        mavenLocal()
     }
 }
 

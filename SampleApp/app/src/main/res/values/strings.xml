@@ -2,5 +2,6 @@
     <string name="app_name">Sample Placed SDK App</string>
 
     <!-- Put your Placed app key here -->
-    <string name="placed_api_key">YOUR_APP_KEY</string>
+    <!--<string name="placed_api_key">c3d51dbd2631</string>-->
+    <string name="placed_api_key">708a91077378</string>
 </resources>

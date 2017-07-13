@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.placed.client.android.SdkMods;
 import com.placed.client.android.persistent.PlacedAgent;
 
 public class MainActivity extends AppCompatActivity {
