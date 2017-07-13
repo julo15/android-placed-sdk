@@ -1,8 +1,16 @@
-# Placed Affiliate SDK (Android) v4.0.0
+# Placed Affiliate SDK v4.0.0
+
+## Introduction
+
+The Placed SDK for Android is designed to help you add Placed location gathering to your app. It exposes simple public API calls that can be used to turn location gathering on.
+
+The SDK has been designed for easy setup and integration with both new and existing mobile applications.
+
+## Setup
 
 Integrating the Placed SDK into your app involves a few steps as described below.
 
-## First add the dependency to your project
+### First, add the dependency to your project
 
 Before you can integrate the Placed SDK into your app, you need to add the relevant dependency to your app.
 
@@ -54,7 +62,7 @@ Before you can integrate the Placed SDK into your app, you need to add the relev
 
 At this point your app should build, although the Placed SDK will not start yet.
 
-## Second integrate the Placed SDK
+### Second, integrate the Placed SDK
 
 Once you've added the Placed SDK as an app dependency, adding the Placed SDK to your app involves several more steps:
 
@@ -62,7 +70,7 @@ Once you've added the Placed SDK as an app dependency, adding the Placed SDK to 
 2. Prompt for location permission
 3. Register your app and prompt for user opt-in to Placed measurement
 
-### AndroidManifest.xml changes
+#### AndroidManifest.xml changes
 
 Add the application key provided to you by Placed in the application tag of your **AndroidManifest.xml**.
 
@@ -70,7 +78,7 @@ Add the application key provided to you by Placed in the application tag of your
         <meta-data android:name="placed_app_key" android:value="YOUR_APP_KEY" />
 ```
 
-### Prompting for location permission
+#### Prompting for location permission
 
 If you don't already prompt for fine location permission, you should do so before registering your app with the Placed SDK.
 
@@ -92,13 +100,13 @@ For an example, see the  [main activity in the sample app](https://github.com/pl
 
 In particular, notice how `registerAppWithDialog` is called in both the case where fine location is first requested and in all subsequent app launches.
 
-## Register
+## Registration
 Please contact your Placed representative to find out how to register your account. If you do not have a representative yet, please email [affiliate@placed.com](mailto:affiliate@placed.com)
 
 ## Support
 For further guidance contact [affiliate@placed.com](mailto:affliate@placed.com)
 
-## SDK Glossary
+## Reference
 
 `static void registerAppWithDialog(final Activity activity, final String appKey)`
 
@@ -115,6 +123,6 @@ be presented if the user is not opted in.
 
 Similar to the standard `registerAppWithDialog` method, but pass in a theme
 parameter to use a custom dialog theme for user opt-in. The `theme` parameter
-should be the resource id of the theme you want to use. See the
-[Android SDK theme documentation](https://developer.android.com/guide/topics/ui/themes.html)
+should be the resource id of the theme you want to use. See
+[Android Styles and Themes](https://developer.android.com/guide/topics/ui/themes.html)
 for more details.
